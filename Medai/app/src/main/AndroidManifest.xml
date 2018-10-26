@@ -28,7 +28,9 @@
 
         <activity android:name=".PostDbResponse.PostDb" />
         <activity android:name=".Camera.CustomDialogActivity" />
-        <activity android:name=".Prescription.PrescriptionList"></activity>
+        <activity android:name=".Prescription.PrescriptionList" />
+        <activity android:name=".Prescription.PrescriptionActivity" />
+        <activity android:name=".Prescription.AddPrescription"></activity>
     </application>
 
 </manifest>

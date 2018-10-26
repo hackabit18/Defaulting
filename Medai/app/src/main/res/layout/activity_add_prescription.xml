@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Prescription.AddPrescription">
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/layoutName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="8dp"
+        android:textColorHint="#CBE432">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/enterName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter the prescription name"
+            android:inputType="number"
+            />
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/layoutMedicine1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="8dp"
+        android:textColorHint="#CBE432"
+        app:layout_constraintTop_toBottomOf="@id/layoutName">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/enterMedicine1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter the medicine name"
+            android:inputType="number"
+            />
+    </android.support.design.widget.TextInputLayout>
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/layoutMedicine2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="8dp"
+        android:visibility="gone"
+        android:textColorHint="#CBE432"
+        app:layout_constraintTop_toBottomOf="@id/layoutMedicine1">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/enterMedicine2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter the medicine name"
+            android:inputType="number"
+            />
+    </android.support.design.widget.TextInputLayout>
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/layoutMedicine3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="8dp"
+        android:visibility="gone"
+        android:textColorHint="#CBE432"
+        app:layout_constraintTop_toBottomOf="@id/layoutMedicine2">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/enterMedicine3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter the medicine name"
+            android:inputType="number"
+            />
+    </android.support.design.widget.TextInputLayout>
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/layoutMedicine4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="8dp"
+        android:visibility="gone"
+        android:textColorHint="#CBE432"
+        app:layout_constraintTop_toBottomOf="@id/layoutMedicine3">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/enterMedicine4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter the medicine name"
+            android:inputType="number"
+            />
+    </android.support.design.widget.TextInputLayout>
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/layoutMedicine5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="8dp"
+        android:textColorHint="#CBE432"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/layoutMedicine4">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/enterMedicine5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter the medicine name"
+            android:inputType="number"
+            />
+    </android.support.design.widget.TextInputLayout>
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/layoutMedicine6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="8dp"
+        android:textColorHint="#CBE432"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/layoutMedicine5">
+
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/enterMedicine6"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Enter the medicine name"
+            android:inputType="number"
+            />
+    </android.support.design.widget.TextInputLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="15dp"/>
+    <Button
+        android:id="@+id/button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:text="Save changes"/>
+
+</android.support.constraint.ConstraintLayout>
