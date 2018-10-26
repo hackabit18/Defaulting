@@ -1,7 +1,7 @@
 var mongoose = require('mongoose');
 
 var medDataSchema = new mongoose.Schema({
-    title: {
+    name: {
         type: String
     },
     date: {
