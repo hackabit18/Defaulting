@@ -5,11 +5,10 @@ var db = require('../models');
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  console.log("got index")
   db.MedData.find()
-    .then(function(posts) {
-      posts = posts.reverse();
-      res.json(posts);
+    .then(function(medData) {
+      medData = medData.reverse();
+      res.json(medData);
     })
     .catch(function(err) {
         res.send(err);
