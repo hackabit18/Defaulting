@@ -1,6 +1,7 @@
 package com.vanshika.hackabit.medai.Adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.vanshika.hackabit.medai.Prescription.PrescriptionActivity;
 import com.vanshika.hackabit.medai.R;
 
 import java.util.ArrayList;
@@ -35,7 +37,13 @@ public class PrescriptionListAdapter extends RecyclerView.Adapter<PrescriptionLi
     public void onBindViewHolder(@NonNull listViewHolder holder, int position) {
         String prescriptionName=prescriptionList.get(position);
         holder.topic.setText(prescriptionName);
-
+        holder.cardView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(context, PrescriptionActivity.class);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
