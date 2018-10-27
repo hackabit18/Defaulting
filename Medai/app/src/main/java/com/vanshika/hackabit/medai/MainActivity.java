@@ -76,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setOffscreenPageLimit(3);
         mAPIService = ApiUtils.getAPIService();
         //Initializing the tablayout
-        textView=findViewById(R.id.imageText);
+        //textView=findViewById(R.id.imageText);
         tabLayout = (TabLayout) findViewById(R.id.tablayout);
         tabLayout.setupWithViewPager(viewPager);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -198,12 +198,15 @@ Uri photoURI;
     }
 
     private void workOnDatabase(String s) {
-        mAPIService.sendMedName("[\"ac\"]").enqueue(new Callback<MedicineDb>() {
+        mAPIService.sendMedName(s).enqueue(new Callback<MedicineDb>() {
             @Override
             public void onResponse(Call<MedicineDb> call, Response<MedicineDb> response) {
                 //Log.v("line 195",response.body().toString());
                 Toast.makeText(MainActivity.this, "successful", Toast.LENGTH_SHORT).show();
-                CustomDialogClass.addData(response.body().getMedicineName(),response.body().getDosage()+" "+response.body().getSideEffects()+" "+response.body().getNtb());
+                if (response.body()!=null){
+                    CustomDialogClass.addData(response.body().getMedicineName(),response.body().getDosage()+" "+response.body().getSideEffects()+" "+response.body().getNtb());
+                }
+                else CustomDialogClass.addData("Not Available ","No info available ");
                 CustomDialogClass cdd=new CustomDialogClass(MainActivity.this);
                 cdd.show();
             }
@@ -219,6 +222,7 @@ Uri photoURI;
                 if (response.isSuccessful()){
                     Log.v("line207",response.body().getDosage());
                     *//*final AppDatabase
+                            db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class,"new_dose")
                             db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class,"new_dose")
                             .build();
                     AsyncTask.execute(new Runnable() {
@@ -254,13 +258,16 @@ Uri photoURI;
 
                         extractedText = VisionAPI.extractTextFromImage(mCurrentPhotoPath);
                         String testExtract = "";
-                        /*for(String s: extractedText){
-                            testExtract = s;
+                        for(String s: extractedText){
+                            testExtract  = testExtract+ "\""+s+"\",";
                             Log.v("mainfile295", testExtract);
 
-                        }*/
-                        Log.v("mainfile262", extractedText.toString());
-                        workOnDatabase(extractedText.toString());
+                        }
+                        testExtract = testExtract.substring(0, testExtract.length()-1);
+                        testExtract="["+testExtract+"]";
+                        Log.v("mainline265",testExtract);
+                        //Log.v("mainfile262", extractedText);
+                        workOnDatabase(testExtract);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }

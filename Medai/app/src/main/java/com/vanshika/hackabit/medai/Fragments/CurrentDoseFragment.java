@@ -55,31 +55,22 @@ public class CurrentDoseFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        list=new ArrayList<>();
         addAdapter();
+        db = Room.databaseBuilder(getActivity().getApplicationContext(), AppDatabase.class, "new_dose")
+                .build();
+        new task().execute("");
 
 
 
     }
 
     private void addAdapter() {
-        list=new ArrayList<>();
-        db = Room.databaseBuilder(getActivity().getApplicationContext(), AppDatabase.class, "new_dose")
-                .build();
-        new task().execute("");
+
+
 
         //list.add(new NewDose("bvkse","ckjbakc","ckjabjc","cakjbc","cka","ckav","cka"));
-        /*list.add(new CurrentMedicine("med1","Dose timings: X times a Day\n" +
-                "Dose Strength: Y mg\n" +
-                "Active ingredient : <Chemical_Name>\n" +
-                "Description: <Info Dump>","t1"));
-        list.add(new CurrentMedicine("med2","Dose timings: X times a Day\n" +
-                "Dose Strength: Y mg\n" +
-                "Active ingredient : <Chemical_Name>\n" +
-                "Description: <Info Dump>","t1"));
-        list.add(new CurrentMedicine("med3","Dose timings: X times a Day\n" +
-                "Dose Strength: Y mg\n" +
-                "Active ingredient : <Chemical_Name>\n" +
-                "Description: <Info Dump>","t1"));*/
+
     }
     public class task extends AsyncTask<String, String,String>{
 
@@ -87,6 +78,18 @@ public class CurrentDoseFragment extends Fragment {
         protected String doInBackground(String... strings) {
 
             list=db.userDao().getNewDose();
+            list.add(new NewDose("med1","side effects",
+                    "dosage" ,
+                    "note taken" ,
+                    "t1","t2","t3"));
+            list.add(new NewDose("med1","side effects",
+                    "dosage" ,
+                    "note taken" ,
+                    "t1","t2","t3"));
+            list.add(new NewDose("med1","side effects",
+                    "dosage" ,
+                    "note taken" ,
+                    "t1","t2","t3"));
 
             return null;
         }
@@ -98,9 +101,10 @@ public class CurrentDoseFragment extends Fragment {
                     new LinearLayoutManager(getActivity().getApplication(), LinearLayoutManager.VERTICAL, false);
 
             recyclerView=getActivity().findViewById(R.id.currentDoseRecycler);
-            recyclerView.setLayoutManager(mLayoutManager);
+
             adapter=new CurrentPresAdapter(getActivity().getApplicationContext(),list);
             recyclerView.setAdapter(adapter);
+            recyclerView.setLayoutManager(mLayoutManager);
         }
     }
 

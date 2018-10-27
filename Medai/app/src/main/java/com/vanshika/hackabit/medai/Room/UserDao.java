@@ -10,10 +10,10 @@ import java.util.List;
 
 @Dao
 public interface UserDao {
-    @Query("SELECT * FROM prescription")
-    List<Prescription> getAllPrescriptions();
-    @Insert
-    void insertAll(Prescription prescriptionObject);
+    /*@Query("SELECT * FROM prescription")
+    List<Prescription> getAllPrescriptions();*/
+    /*@Insert
+    void insertAll(Prescription prescriptionObject);*/
     @Insert
     void inserNewDose(NewDose newDose);
     @Query("SELECT * FROM new_dose")

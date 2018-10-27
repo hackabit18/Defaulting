@@ -113,7 +113,7 @@ Button button;
                     @Override
                     public void run() {
                         db.userDao().inserNewDose(new NewDose(name.getText().toString(),getIntent().getStringExtra("info"),""," ",set1,set2,set3));
-                        Log.v("line116",db.toString());
+                        Log.v("line116",db.toString()+" "+db.userDao().getNewDose().get(0).getDosage());
 
                     }
                 });

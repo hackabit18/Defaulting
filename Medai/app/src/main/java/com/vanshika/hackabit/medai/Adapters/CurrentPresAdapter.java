@@ -39,8 +39,11 @@ public class CurrentPresAdapter extends RecyclerView.Adapter<CurrentPresAdapter.
     public void onBindViewHolder(@NonNull listViewHolder holder, int position) {
         NewDose object=list.get(position);
         holder.doseName.setText(object.getName());
-        holder.doseDes.setText(object.getDosage());
-
+        holder.doseSide.setText(object.getDosage());
+        holder.ntb.setText(object.getNotTaken());
+        holder.t1.setText(object.getT1());
+        holder.t2.setText(object.getT2());
+        holder.t3.setText(object.getT3());
     }
 
     @Override
@@ -49,13 +52,17 @@ public class CurrentPresAdapter extends RecyclerView.Adapter<CurrentPresAdapter.
     }
 
     class listViewHolder extends RecyclerView.ViewHolder {
-        public TextView doseName,doseDes;
+        public TextView doseName,doseSide,ntb,t1,t2,t3;
 
         public listViewHolder(View itemView) {
             super(itemView);
 
             doseName = (TextView) itemView.findViewById(R.id.doseName);
-            doseDes = (TextView) itemView.findViewById(R.id.doseDes);
+            doseSide = (TextView) itemView.findViewById(R.id.doseSideEffect);
+            ntb=(TextView) itemView.findViewById(R.id.ntb);
+            t1=(TextView) itemView.findViewById(R.id.t1);
+            t2=(TextView) itemView.findViewById(R.id.t2);
+            t3=(TextView) itemView.findViewById(R.id.t3);
 
         }
     }

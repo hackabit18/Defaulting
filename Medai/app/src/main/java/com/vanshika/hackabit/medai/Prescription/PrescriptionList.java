@@ -53,7 +53,7 @@ Button button;
         AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
-                list=db.userDao().getAllPrescriptions();
+                //list=db.userDao().getAllPrescriptions();
                 adapter=new PrescriptionListAdapter(getApplicationContext(),list);
                 recyclerView.setAdapter(adapter);
             }

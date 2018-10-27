@@ -11,7 +11,7 @@ import android.support.annotation.NonNull;
 
 import com.vanshika.hackabit.medai.Prescription.PrescriptionList;
 
-@Database(entities = {Prescription.class,NewDose.class},version=2)
+@Database(entities = {NewDose.class},version=2)
 public abstract
 class AppDatabase  extends RoomDatabase{
     private static AppDatabase INSTANCE;
