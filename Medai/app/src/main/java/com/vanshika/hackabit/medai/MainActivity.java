@@ -12,6 +12,7 @@ import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -31,6 +32,8 @@ import android.widget.Toast;
 /*import com.google.android.gms.vision.Frame;
 import com.google.android.gms.vision.text.TextBlock;
 import com.google.android.gms.vision.text.TextRecognizer;*/
+import com.soundcloud.android.crop.Crop;
+import com.soundcloud.android.crop.CropImageActivity;
 import com.vanshika.hackabit.medai.Adapters.ViewPagerAdapter;
 import com.vanshika.hackabit.medai.Camera.CustomDialogActivity;
 import com.vanshika.hackabit.medai.Camera.CustomDialogClass;
@@ -169,7 +172,7 @@ public class MainActivity extends AppCompatActivity {
 
     String mCurrentPhotoPath;
     static final int REQUEST_TAKE_PHOTO = 1;
-
+Uri photoURI;
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
@@ -180,37 +183,42 @@ public class MainActivity extends AppCompatActivity {
                 return;
             }
             if (photoFile != null) {
-                Uri photoURI = FileProvider.getUriForFile(this,
+                 photoURI = FileProvider.getUriForFile(this,
                         "com.vanshika.hackabit.medai.provider",
                         photoFile);
                 //Uri photoURI= FileProvider.getUriForFile(R.drawable.camera);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                 startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
                 //workOnDatabase(testExtract[0]);
+
+
             }
         }
         //workOnDatabase(testExtract[0]);
     }
 
     private void workOnDatabase(String s) {
-        mAPIService.sendMedName(s).enqueue(new Callback<Void>() {
+        mAPIService.sendMedName("[\"ac\"]").enqueue(new Callback<MedicineDb>() {
             @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
+            public void onResponse(Call<MedicineDb> call, Response<MedicineDb> response) {
                 //Log.v("line 195",response.body().toString());
                 Toast.makeText(MainActivity.this, "successful", Toast.LENGTH_SHORT).show();
+                CustomDialogClass.addData(response.body().getMedicineName(),response.body().getDosage()+" "+response.body().getSideEffects()+" "+response.body().getNtb());
+                CustomDialogClass cdd=new CustomDialogClass(MainActivity.this);
+                cdd.show();
             }
 
             @Override
-            public void onFailure(Call<Void> call, Throwable t) {
+            public void onFailure(Call<MedicineDb> call, Throwable t) {
                 Log.v("line200",t.getMessage());
             }
         });
-        mAPIService.getMedicineInfo().enqueue(new Callback<MedicineDb>() {
+       /* mAPIService.getMedicineInfo().enqueue(new Callback<MedicineDb>() {
             @Override
             public void onResponse(Call<MedicineDb> call, final Response<MedicineDb> response) {
                 if (response.isSuccessful()){
                     Log.v("line207",response.body().getDosage());
-                    /*final AppDatabase
+                    *//*final AppDatabase
                             db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class,"new_dose")
                             .build();
                     AsyncTask.execute(new Runnable() {
@@ -218,41 +226,71 @@ public class MainActivity extends AppCompatActivity {
                         public void run() {
                             db.userDao().inserNewDose(new NewDose(response.body().getMedicineName(),response.body().getSideEffects(),response.body().getDosage(),response.body().getNtb(),"","",""));
                         }
-                    });*/
-                    CustomDialogClass.addData(response.body().getMedicineName(),response.body().getDosage()+" "+response.body().getSideEffects()+" "+response.body().getNtb());
-                    CustomDialogClass cdd=new CustomDialogClass(MainActivity.this);
-                    cdd.show();
+                    });*//*
+
                 }
             }
 
-            @Override
+            /*@Override
             public void onFailure(Call<MedicineDb> call, Throwable t) {
                 Log.v("line213",t.getMessage());
             }
-        });
+        });*/
 
     }
 
-    private File createImageFile() throws IOException {
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
-        String root = Environment.getExternalStorageDirectory().toString();
-        File myDir = new File(root + "/myCapturedImages");
-        if (!myDir.exists())
-            myDir.mkdirs();
-        final File image = File.createTempFile(
-                imageFileName,  /* prefix */
-                ".jpg",         /* suffix */
-                myDir      /* directory */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    if(requestCode == 1){
+            Crop.of(photoURI,photoURI ).asSquare().start(this);
+
+        }else if (requestCode == Crop.REQUEST_CROP && resultCode == RESULT_OK) {
+            //doSomethingWithCroppedImage(outputUri);
+            AsyncTask.execute(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+
+                        extractedText = VisionAPI.extractTextFromImage(mCurrentPhotoPath);
+                        String testExtract = "";
+                        /*for(String s: extractedText){
+                            testExtract = s;
+                            Log.v("mainfile295", testExtract);
+
+                        }*/
+                        Log.v("mainfile262", extractedText.toString());
+                        workOnDatabase(extractedText.toString());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }
+    }
+
+    /*private File createImageFile() throws IOException {
+            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+            String imageFileName = "JPEG_" + timeStamp + "_";
+            String root = Environment.getExternalStorageDirectory().toString();
+            File myDir = new File(root + "/myCapturedImages");
+            if (!myDir.exists())
+                myDir.mkdirs();
+            final File image = File.createTempFile(
+                    imageFileName,  *//* prefix *//*
+                ".jpg",         *//* suffix *//*
+                myDir      *//* directory *//*
         );
+        Log.v("mainfile248", ""+image.length());
         mCurrentPhotoPath = image.getAbsolutePath();
+        Log.v("mainfile249", String.valueOf(image.exists()));
         Log.v("mainfile195",mCurrentPhotoPath);
         final String[] testExtract = {""};
         AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
                 try {
-                    extractedText=VisionAPI.extractTextFromImage(image);
+                    extractedText=VisionAPI.extractTextFromImage(mCurrentPhotoPath);
                     Log.v("mainfile200",extractedText.toString());
                     for(String s: extractedText){
                         testExtract[0] = s;
@@ -267,6 +305,21 @@ public class MainActivity extends AppCompatActivity {
 
 
         textView.setText(testExtract[0]);
+        return image;
+    }*/
+    private File createImageFile() throws IOException {
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_2_";
+        String root = Environment.getExternalStorageDirectory().toString();
+        File myDir = new File(root + "/myCapturedImages");
+        if (!myDir.exists())
+            myDir.mkdirs();
+        final File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                myDir      /* directory */
+        );
+        mCurrentPhotoPath = image.getAbsolutePath();
         return image;
     }
 

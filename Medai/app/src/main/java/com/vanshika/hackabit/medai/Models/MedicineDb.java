@@ -4,7 +4,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 public class MedicineDb {
-    @SerializedName("drug_name")
+    @SerializedName("drug-name")
     @Expose
     String medicineName;
     @SerializedName("side-effects")
