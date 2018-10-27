@@ -11,7 +11,7 @@ import android.support.annotation.NonNull;
 
 import com.vanshika.hackabit.medai.Prescription.PrescriptionList;
 
-@Database(entities = {Prescription.class},version=2)
+@Database(entities = {Prescription.class,NewDose.class},version=2)
 public abstract
 class AppDatabase  extends RoomDatabase{
     private static AppDatabase INSTANCE;
@@ -19,7 +19,7 @@ class AppDatabase  extends RoomDatabase{
     public abstract UserDao userDao();
     public static AppDatabase getAppDatabase(Context context){
         if(INSTANCE==null){
-            INSTANCE= Room.databaseBuilder(context.getApplicationContext(),AppDatabase.class,"prescription")
+            INSTANCE= Room.databaseBuilder(context.getApplicationContext(),AppDatabase.class,"new_dose")
                     .allowMainThreadQueries()
                     .build();
         }return INSTANCE;

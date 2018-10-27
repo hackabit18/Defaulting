@@ -2,7 +2,7 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="200dp"
-    android:background="@drawable/curve_shap"
+    android:background="@color/colorPrimary"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" >
 

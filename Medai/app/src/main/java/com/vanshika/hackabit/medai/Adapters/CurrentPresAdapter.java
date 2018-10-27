@@ -12,14 +12,16 @@ import android.widget.TextView;
 import com.vanshika.hackabit.medai.Models.CurrentMedicine;
 import com.vanshika.hackabit.medai.Models.MedicineDb;
 import com.vanshika.hackabit.medai.R;
+import com.vanshika.hackabit.medai.Room.NewDose;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class CurrentPresAdapter extends RecyclerView.Adapter<CurrentPresAdapter.listViewHolder>{
     private Context context;
-    private ArrayList<CurrentMedicine> list;
+    private List<NewDose> list;
 
-    public CurrentPresAdapter(Context context, ArrayList<CurrentMedicine> list) {
+    public CurrentPresAdapter(Context context, List<NewDose> list) {
         this.context = context;
         this.list = list;
     }
@@ -35,9 +37,9 @@ public class CurrentPresAdapter extends RecyclerView.Adapter<CurrentPresAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull listViewHolder holder, int position) {
-        CurrentMedicine object=list.get(position);
-        holder.doseName.setText(object.getMedicineName());
-        holder.doseDes.setText(object.getMedicineInfo());
+        NewDose object=list.get(position);
+        holder.doseName.setText(object.getName());
+        holder.doseDes.setText(object.getDosage());
 
     }
 
