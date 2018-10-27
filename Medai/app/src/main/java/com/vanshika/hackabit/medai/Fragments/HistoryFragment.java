@@ -17,10 +17,11 @@ import com.vanshika.hackabit.medai.Models.CurrentMedicine;
 import com.vanshika.hackabit.medai.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class HistoryFragment extends Fragment{
     CurrentPresAdapter adapter;
-    ArrayList<CurrentMedicine> list;
+    List<CurrentMedicine> list;
     RecyclerView recyclerView;
     LinearLayoutManager mLayoutManager;
     public HistoryFragment(){
@@ -46,8 +47,8 @@ public class HistoryFragment extends Fragment{
 
         recyclerView=getActivity().findViewById(R.id.historyRecycler);
         recyclerView.setLayoutManager(mLayoutManager);
-        adapter=new CurrentPresAdapter(getActivity().getApplicationContext(),list);
-        recyclerView.setAdapter(adapter);
+        /*adapter=new CurrentPresAdapter(getActivity().getApplicationContext(),list);
+        recyclerView.setAdapter(adapter);*/
 
     }
     private void addAdapter() {

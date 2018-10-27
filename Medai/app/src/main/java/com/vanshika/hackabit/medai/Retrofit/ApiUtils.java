@@ -2,7 +2,7 @@ package com.vanshika.hackabit.medai.Retrofit;
 
 public class ApiUtils {
     private ApiUtils() {}
-    public static final String BASE_URL = "http://192.168.43.145:8000/";
+    public static final String BASE_URL = "https://med-ai.herokuapp.com/";
 
     public static APIService getAPIService() {
 
