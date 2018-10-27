@@ -17,5 +17,5 @@ public interface UserDao {
     @Insert
     void inserNewDose(NewDose newDose);
     @Query("SELECT * FROM new_dose")
-    ArrayList<NewDose> getNewDose();
+    List<NewDose> getNewDose();
 }

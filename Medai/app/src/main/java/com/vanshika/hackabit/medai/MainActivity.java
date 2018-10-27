@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
     TextView textView;
     HashSet<String> extractedText;
     private APIService mAPIService;
-    String[] testExtract = {""};
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -139,14 +139,14 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         int id=item.getItemId();
         if (id==R.id.capture){
-            /*if (checkSelfPermission(Manifest.permission.CAMERA)
+            if (checkSelfPermission(Manifest.permission.CAMERA)
                     != PackageManager.PERMISSION_GRANTED) {
                 requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE},
                         1);
             } else {
                 dispatchTakePictureIntent();
             }
-*/ workOnDatabase("my anme");
+
             return true;
         }return true;
     }
@@ -186,23 +186,25 @@ public class MainActivity extends AppCompatActivity {
                 //Uri photoURI= FileProvider.getUriForFile(R.drawable.camera);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                 startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
-                workOnDatabase(testExtract[0]);
+                //workOnDatabase(testExtract[0]);
             }
         }
+        //workOnDatabase(testExtract[0]);
     }
 
     private void workOnDatabase(String s) {
-        /*mAPIService.sendMedName(s).enqueue(new Callback<Void>() {
+        mAPIService.sendMedName(s).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-                Log.v("line 195",response.body().toString());
+                //Log.v("line 195",response.body().toString());
+                Toast.makeText(MainActivity.this, "successful", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable t) {
                 Log.v("line200",t.getMessage());
             }
-        });*/
+        });
         mAPIService.getMedicineInfo().enqueue(new Callback<MedicineDb>() {
             @Override
             public void onResponse(Call<MedicineDb> call, final Response<MedicineDb> response) {
@@ -238,19 +240,19 @@ public class MainActivity extends AppCompatActivity {
         File myDir = new File(root + "/myCapturedImages");
         if (!myDir.exists())
             myDir.mkdirs();
-        File image = File.createTempFile(
+        final File image = File.createTempFile(
                 imageFileName,  /* prefix */
                 ".jpg",         /* suffix */
                 myDir      /* directory */
         );
         mCurrentPhotoPath = image.getAbsolutePath();
         Log.v("mainfile195",mCurrentPhotoPath);
-
+        final String[] testExtract = {""};
         AsyncTask.execute(new Runnable() {
             @Override
             public void run() {
                 try {
-                    extractedText=VisionAPI.extractTextFromImage(mCurrentPhotoPath);
+                    extractedText=VisionAPI.extractTextFromImage(image);
                     Log.v("mainfile200",extractedText.toString());
                     for(String s: extractedText){
                         testExtract[0] = s;

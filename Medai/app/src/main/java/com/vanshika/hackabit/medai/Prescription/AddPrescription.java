@@ -94,7 +94,7 @@ Button button;
                 mTimePicker = new TimePickerDialog(AddPrescription.this, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
-                        time2.setText( selectedHour + ":" + selectedMinute);
+                        time3.setText( selectedHour + ":" + selectedMinute);
                     }
                 }, hour, minute, true);//Yes 24 hour time
                 set3=hour + ":" + minute;

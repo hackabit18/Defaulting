@@ -1,5 +1,7 @@
 package com.vanshika.hackabit.medai.Fragments;
 
+import android.arch.persistence.room.Room;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -18,14 +20,18 @@ import com.vanshika.hackabit.medai.Adapters.CurrentPresAdapter;
 import com.vanshika.hackabit.medai.Models.CurrentMedicine;
 import com.vanshika.hackabit.medai.Models.MedicineDb;
 import com.vanshika.hackabit.medai.R;
+import com.vanshika.hackabit.medai.Room.AppDatabase;
+import com.vanshika.hackabit.medai.Room.NewDose;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class CurrentDoseFragment extends Fragment {
     CurrentPresAdapter adapter;
-    ArrayList<CurrentMedicine> list;
+    List<NewDose> list;
     RecyclerView recyclerView;
     LinearLayoutManager mLayoutManager;
+    AppDatabase db;
     public CurrentDoseFragment() {
     }
 
@@ -50,6 +56,7 @@ public class CurrentDoseFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         addAdapter();
+
         mLayoutManager =
                 new LinearLayoutManager(getActivity().getApplication(), LinearLayoutManager.VERTICAL, false);
 
@@ -62,8 +69,17 @@ public class CurrentDoseFragment extends Fragment {
 
     private void addAdapter() {
         list=new ArrayList<>();
+        db = Room.databaseBuilder(getActivity().getApplicationContext(), AppDatabase.class, "new_dose")
+                .build();
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                list=db.userDao().getNewDose();
+            }
+        });
 
-        list.add(new CurrentMedicine("med1","Dose timings: X times a Day\n" +
+        list.add(new NewDose("bvkse","ckjbakc","ckjabjc","cakjbc","cka","ckav","cka"));
+        /*list.add(new CurrentMedicine("med1","Dose timings: X times a Day\n" +
                 "Dose Strength: Y mg\n" +
                 "Active ingredient : <Chemical_Name>\n" +
                 "Description: <Info Dump>","t1"));
@@ -74,7 +90,7 @@ public class CurrentDoseFragment extends Fragment {
         list.add(new CurrentMedicine("med3","Dose timings: X times a Day\n" +
                 "Dose Strength: Y mg\n" +
                 "Active ingredient : <Chemical_Name>\n" +
-                "Description: <Info Dump>","t1"));
+                "Description: <Info Dump>","t1"));*/
     }
 
 }

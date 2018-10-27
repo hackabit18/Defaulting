@@ -135,9 +135,9 @@ public class VisionAPI {
         return processResponseStream(httpConnection);
     }
 
-    public static HashSet<String> extractTextFromImage(String filePath) throws IOException{
+    public static HashSet<String> extractTextFromImage(File image) throws IOException{
 
-        File image = new File(filePath);
+        //File image = new File(filePath);
         if(!image.exists()) {
             System.out.println("File Not Found! Check Path.");
             return new HashSet<String>();
@@ -163,11 +163,5 @@ public class VisionAPI {
         return processResponseStream(httpConnection);
     }
 
-    public static void main(String[] args) throws IOException {
-
-        HashSet<String> extractedText = extractTextFromImage("/home/sponde/Downloads/test1.jpeg");
-        for(String s: extractedText)
-            System.out.println(s);
-    }
 
 }
