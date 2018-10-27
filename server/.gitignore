@@ -60,5 +60,5 @@ typings/
 # next.js build output
 .next
 node_modules/
-.env
 keys_dev.js
+backup/

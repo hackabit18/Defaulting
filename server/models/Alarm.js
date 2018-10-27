@@ -4,14 +4,18 @@ var medDataSchema = new mongoose.Schema({
     'drug-name': {
         type: String
     },
-    'side-effects': {
-        type: String
+    'drug-data': {
+        type: Schema.Types.ObjectId,
+        ref: 'drug-name'
     },
-    'dosage': {
-        type: String
+    'times': {
+        type: [{
+            time: {type: String},
+            isOn: {type: Boolean}
+        }]
     },
-    'when-ntb-taken': {
-        type: String
+    'days': {
+        type: Number
     }
 })
 
