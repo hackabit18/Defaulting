@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.Button;
 
+import com.vanshika.hackabit.medai.Prescription.AddPrescription;
 import com.vanshika.hackabit.medai.Prescription.PrescriptionList;
 import com.vanshika.hackabit.medai.R;
 
@@ -43,9 +44,8 @@ public class CustomDialogClass extends Dialog implements
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_yes:
-                Intent intent=new Intent(c, PrescriptionList.class);
+                Intent intent=new Intent(c, AddPrescription.class);
                 c.startActivity(intent);
-                c.finish();
                 break;
 
             default:

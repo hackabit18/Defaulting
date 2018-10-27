@@ -11,20 +11,32 @@ public class Prescription {
     @PrimaryKey
     @ColumnInfo(name = "name")
     String name;
-    @ColumnInfo(name = "medicine1")
-    String medicine1;
-    @ColumnInfo(name = "medicine2")
-    String medicine2;
-    @ColumnInfo(name = "medicine3")
-    String medicine3;
-    @ColumnInfo(name = "medicine4")
+    @ColumnInfo(name = "t1")
+    String t1;
+    @ColumnInfo(name = "t2")
+    String t2;
+    @ColumnInfo(name = "t3")
+    String t3;
+    /*@ColumnInfo(name = "medicine4")
     String medicine4;
     @ColumnInfo(name = "medicine5")
     String medicine5;
     @ColumnInfo(name = "medicine6")
     String medicine6;
+    @ColumnInfo(name = "t1")
+    String t1;
+    @ColumnInfo(name = "t2")
+    String t2;
+    @ColumnInfo(name = "t3")
+    String t3;
+    @ColumnInfo(name = "t4")
+    String t4;
+    @ColumnInfo(name = "t5")
+    String t5;
+    @ColumnInfo(name = "t6")
+    String t6;*/
 
-    public Prescription(String name, String medicine1, String medicine2, String medicine3, String medicine4, String medicine5, String medicine6) {
+    /*public Prescription(@NonNull String name, String medicine1, String medicine2, String medicine3, String medicine4, String medicine5, String medicine6, String t1, String t2, String t3, String t4, String t5, String t6) {
         this.name = name;
         this.medicine1 = medicine1;
         this.medicine2 = medicine2;
@@ -32,7 +44,29 @@ public class Prescription {
         this.medicine4 = medicine4;
         this.medicine5 = medicine5;
         this.medicine6 = medicine6;
+        this.t1 = t1;
+        this.t2 = t2;
+        this.t3 = t3;
+        this.t4 = t4;
+        this.t5 = t5;
+        this.t6 = t6;
+    }*/
+
+    public Prescription(@NonNull String name, String t1, String t2, String t3) {
+        this.name = name;
+        this.t1 = t1;
+        this.t2 = t2;
+        this.t3 = t3;
     }
+    /*public Prescription(String name, String medicine1, String medicine2, String medicine3, String medicine4, String medicine5, String medicine6) {
+        this.name = name;
+        this.medicine1 = medicine1;
+        this.medicine2 = medicine2;
+        this.medicine3 = medicine3;
+        this.medicine4 = medicine4;
+        this.medicine5 = medicine5;
+        this.medicine6 = medicine6;
+    }*/
 
     public String getName() {
         return name;
@@ -42,52 +76,28 @@ public class Prescription {
         this.name = name;
     }
 
-    public String getMedicine1() {
-        return medicine1;
+    public String getT1() {
+        return t1;
     }
 
-    public void setMedicine1(String medicine1) {
-        this.medicine1 = medicine1;
+    public void setT1(String t1) {
+        this.t1 = t1;
     }
 
-    public String getMedicine2() {
-        return medicine2;
+    public String getT2() {
+        return t2;
     }
 
-    public void setMedicine2(String medicine2) {
-        this.medicine2 = medicine2;
+    public void setT2(String t2) {
+        this.t2 = t2;
     }
 
-    public String getMedicine3() {
-        return medicine3;
+    public String getT3() {
+        return t3;
     }
 
-    public void setMedicine3(String medicine3) {
-        this.medicine3 = medicine3;
-    }
-
-    public String getMedicine4() {
-        return medicine4;
-    }
-
-    public void setMedicine4(String medicine4) {
-        this.medicine4 = medicine4;
-    }
-
-    public String getMedicine5() {
-        return medicine5;
-    }
-
-    public void setMedicine5(String medicine5) {
-        this.medicine5 = medicine5;
-    }
-
-    public String getMedicine6() {
-        return medicine6;
-    }
-
-    public void setMedicine6(String medicine6) {
-        this.medicine6 = medicine6;
+    public void setT3(String t3) {
+        this.t3 = t3;
     }
 }
 

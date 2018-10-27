@@ -19,6 +19,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.SparseArray;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -55,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setOffscreenPageLimit(3);
 
         //Initializing the tablayout
-        textView=findViewById(R.id.imageText);
+        //textView=findViewById(R.id.imageText);
         tabLayout = (TabLayout) findViewById(R.id.tablayout);
         tabLayout.setupWithViewPager(viewPager);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -78,8 +80,8 @@ public class MainActivity extends AppCompatActivity {
 
         setupViewPager(viewPager);
 
-        fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+        //fab = findViewById(R.id.fab);
+        /*fab.setOnClickListener(new View.OnClickListener() {
             //@RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onClick(View view) {
@@ -87,19 +89,18 @@ public class MainActivity extends AppCompatActivity {
 
 
             //getTextFromImage();
-                CustomDialogClass cdd=new CustomDialogClass(MainActivity.this);
-                cdd.show();
+
 
                 
-               /* if (checkSelfPermission(Manifest.permission.CAMERA)
+               *//* if (checkSelfPermission(Manifest.permission.CAMERA)
                         != PackageManager.PERMISSION_GRANTED) {
                     requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE},
                             1);
                 } else {
                     //dispatchTakePictureIntent();
-                }*/
+                }*//*
             }
-        });
+        });*/
     }
     private void setupViewPager(ViewPager viewPager)
     {
@@ -110,6 +111,22 @@ public class MainActivity extends AppCompatActivity {
         adapter.addFragment(historyFragment,"HISTORY");
         viewPager.setAdapter(adapter);
    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id=item.getItemId();
+        if (id==R.id.capture){
+            CustomDialogClass cdd=new CustomDialogClass(MainActivity.this);
+            cdd.show();
+            return true;
+        }return true;
+    }
 
     public void getTextFromImage() {
         Bitmap bitmap= BitmapFactory.decodeResource(getApplicationContext().getResources(),R.drawable.trial);
