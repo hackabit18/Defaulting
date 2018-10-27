@@ -12,14 +12,16 @@ import android.widget.TextView;
 
 import com.vanshika.hackabit.medai.Prescription.PrescriptionActivity;
 import com.vanshika.hackabit.medai.R;
+import com.vanshika.hackabit.medai.Room.Prescription;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class PrescriptionListAdapter extends RecyclerView.Adapter<PrescriptionListAdapter.listViewHolder> {
     private Context context;
-    private ArrayList<String> prescriptionList;
+    private List<Prescription> prescriptionList;
 
-    public PrescriptionListAdapter(Context context, ArrayList<String> prescriptionList) {
+    public PrescriptionListAdapter(Context context, List<Prescription> prescriptionList) {
         this.context = context;
         this.prescriptionList = prescriptionList;
     }
@@ -35,8 +37,8 @@ public class PrescriptionListAdapter extends RecyclerView.Adapter<PrescriptionLi
 
     @Override
     public void onBindViewHolder(@NonNull listViewHolder holder, int position) {
-        String prescriptionName=prescriptionList.get(position);
-        holder.topic.setText(prescriptionName);
+        Prescription prescriptionName=prescriptionList.get(position);
+        holder.topic.setText(prescriptionName.getName());
         holder.cardView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

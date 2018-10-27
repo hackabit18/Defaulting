@@ -1,23 +1,34 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="80dp"
-    android:background="#3E80B4"
+    android:layout_height="200dp"
+    android:background="@drawable/curve_shap"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" >
 
     <TextView
         android:id="@+id/medicineName"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
+        android:textSize="35dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         android:text="medicine Name"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="4dp"
+        android:background="#ffffff"
+        app:layout_constraintTop_toBottomOf="@+id/medicineName"
+        />
     <TextView
         android:id="@+id/medicineInfo"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:text="Medicine Info"
+        android:textSize="25dp"
+        android:layout_marginTop="15dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/medicineName"/>
@@ -28,10 +39,11 @@
     <Button
         android:id="@+id/btn_yes"
         android:layout_width="match_parent"
-        android:layout_height="30dp"
+        android:layout_height="50dp"
         android:background="@android:color/white"
         android:clickable="true"
         android:text="Add Dosage"
+        android:layout_marginTop="15dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/medicineInfo"
