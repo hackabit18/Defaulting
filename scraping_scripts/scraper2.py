@@ -6,7 +6,6 @@ import json
 '''
 	script starts from here
 '''
-a_to_z = string.ascii_lowercase[:26]
 
 all_ascii_string = string.printable
 
