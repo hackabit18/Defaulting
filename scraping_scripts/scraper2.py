@@ -6,7 +6,6 @@ import json
 '''
 	script starts from here
 '''
-a_to_z = string.ascii_lowercase[:26]
 
 all_ascii_string = string.printable
 
@@ -68,16 +67,3 @@ print("string is: \n%s\n\n" % (json_list_string))
 with open('a1.txt', 'a+') as output_file:
 	output_file.write(json_list_string)
 
-
-#print(drug_header_list[0])
-#print(drug_data_list[0])
-# drug_content_text = drug_content.text
-# drug_content = drug_content_text.replace("â¢  ", "")
-# drug_content = drug_content.replace('\n\n', '\n')
-
-
-
-
-# filename = 'drug_content.txt'
-# with open(filename, 'a+') as file:
-# 	file.write(drug_content)
