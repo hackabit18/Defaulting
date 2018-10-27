@@ -62,6 +62,7 @@ public class CurrentDoseFragment extends Fragment {
 
     private void addAdapter() {
         list=new ArrayList<>();
+
         list.add(new CurrentMedicine("med1","Dose timings: X times a Day\n" +
                 "Dose Strength: Y mg\n" +
                 "Active ingredient : <Chemical_Name>\n" +

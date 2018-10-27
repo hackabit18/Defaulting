@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import com.vanshika.hackabit.medai.R;
 import com.vanshika.hackabit.medai.Room.AppDatabase;
+import com.vanshika.hackabit.medai.Room.NewDose;
 import com.vanshika.hackabit.medai.Room.Prescription;
 
 import java.util.Calendar;
@@ -35,6 +36,7 @@ Button button;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_prescription);
         name=findViewById(R.id.enterName);
+        name.setText(getIntent().getStringExtra("name"));
 
         button=findViewById(R.id.button);
         //fab=findViewById(R.id.fab);
@@ -60,7 +62,7 @@ Button button;
                 }, hour, minute, true);//Yes 24 hour time
                 set1=hour + ":" + minute;
                 mTimePicker.setTitle("Select Time");
-
+                mTimePicker.show();
             }
         });
         time2.setOnClickListener(new View.OnClickListener() {
@@ -82,7 +84,7 @@ Button button;
                 mTimePicker.show();
             }
         });
-        time2.setOnClickListener(new View.OnClickListener() {
+        time3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Calendar mcurrentTime = Calendar.getInstance();
@@ -109,10 +111,10 @@ Button button;
                 AsyncTask.execute(new Runnable() {
                     @Override
                     public void run() {
-                        
+                        db.userDao().inserNewDose(new NewDose(name.getText().toString(),getIntent().getStringExtra("info"),""," ",set1,set2,set3));
+
                     }
                 });
-                        db.userDao().insertAll(new Prescription(name.getText().toString(),set1,set2,set3));
                 Toast.makeText(AddPrescription.this, "Dose added", Toast.LENGTH_SHORT).show();
                 finish();
 

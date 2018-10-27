@@ -1,11 +1,13 @@
 package com.vanshika.hackabit.medai;
 
 import android.Manifest;
+import android.arch.persistence.room.Room;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -18,6 +20,7 @@ import android.support.v4.util.SparseArrayCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -33,11 +36,21 @@ import com.vanshika.hackabit.medai.Camera.CustomDialogActivity;
 import com.vanshika.hackabit.medai.Camera.CustomDialogClass;
 import com.vanshika.hackabit.medai.Fragments.CurrentDoseFragment;
 import com.vanshika.hackabit.medai.Fragments.HistoryFragment;
+import com.vanshika.hackabit.medai.Models.MedicineDb;
+import com.vanshika.hackabit.medai.Retrofit.APIService;
+import com.vanshika.hackabit.medai.Retrofit.ApiUtils;
+import com.vanshika.hackabit.medai.Room.AppDatabase;
+import com.vanshika.hackabit.medai.Room.NewDose;
 
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashSet;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity {
     ViewPager viewPager;
@@ -47,6 +60,9 @@ public class MainActivity extends AppCompatActivity {
     ViewPagerAdapter viewPagerAdapter;
     FloatingActionButton fab;
     TextView textView;
+    HashSet<String> extractedText;
+    private APIService mAPIService;
+    String[] testExtract = {""};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,9 +71,9 @@ public class MainActivity extends AppCompatActivity {
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         viewPager.setOffscreenPageLimit(3);
-
+        mAPIService = ApiUtils.getAPIService();
         //Initializing the tablayout
-        //textView=findViewById(R.id.imageText);
+        textView=findViewById(R.id.imageText);
         tabLayout = (TabLayout) findViewById(R.id.tablayout);
         tabLayout.setupWithViewPager(viewPager);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -118,35 +134,24 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id=item.getItemId();
         if (id==R.id.capture){
-            CustomDialogClass cdd=new CustomDialogClass(MainActivity.this);
-            cdd.show();
+            /*if (checkSelfPermission(Manifest.permission.CAMERA)
+                    != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                        1);
+            } else {
+                dispatchTakePictureIntent();
+            }
+*/ workOnDatabase("my anme");
             return true;
         }return true;
     }
 
-    public void getTextFromImage() {
-        Bitmap bitmap= BitmapFactory.decodeResource(getApplicationContext().getResources(),R.drawable.trial);
-        /*TextRecognizer textRecognizer=new TextRecognizer.Builder(getApplicationContext()).build();
-        if (textRecognizer.isOperational()){
-            Toast.makeText(this, "Could not to take text", Toast.LENGTH_SHORT).show();
-        }
-        else {
-            Frame frame=new Frame.Builder().setBitmap(bitmap).build();
-            SparseArray<TextBlock> items=textRecognizer.detect(frame);
-            StringBuilder sb=new StringBuilder();
-            for (int i=0;i<items.size();i++){
-                TextBlock myItem=items.valueAt(i);
-                sb.append(myItem.getValue());sb.append("/n");
-            }
-            textView.setText(sb.toString());
-        }*/
-
-    }
-   /* @Override
+    @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == 1) {
@@ -176,12 +181,54 @@ public class MainActivity extends AppCompatActivity {
             }
             if (photoFile != null) {
                 Uri photoURI = FileProvider.getUriForFile(this,
-                        "socity.app.camera.provider",
+                        "com.vanshika.hackabit.medai.provider",
                         photoFile);
+                //Uri photoURI= FileProvider.getUriForFile(R.drawable.camera);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                 startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+                workOnDatabase(testExtract[0]);
             }
         }
+    }
+
+    private void workOnDatabase(String s) {
+        /*mAPIService.sendMedName(s).enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                Log.v("line 195",response.body().toString());
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Log.v("line200",t.getMessage());
+            }
+        });*/
+        mAPIService.getMedicineInfo().enqueue(new Callback<MedicineDb>() {
+            @Override
+            public void onResponse(Call<MedicineDb> call, final Response<MedicineDb> response) {
+                if (response.isSuccessful()){
+                    Log.v("line207",response.body().getDosage());
+                    /*final AppDatabase
+                            db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class,"new_dose")
+                            .build();
+                    AsyncTask.execute(new Runnable() {
+                        @Override
+                        public void run() {
+                            db.userDao().inserNewDose(new NewDose(response.body().getMedicineName(),response.body().getSideEffects(),response.body().getDosage(),response.body().getNtb(),"","",""));
+                        }
+                    });*/
+                    CustomDialogClass.addData(response.body().getMedicineName(),response.body().getDosage()+" "+response.body().getSideEffects()+" "+response.body().getNtb());
+                    CustomDialogClass cdd=new CustomDialogClass(MainActivity.this);
+                    cdd.show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<MedicineDb> call, Throwable t) {
+                Log.v("line213",t.getMessage());
+            }
+        });
+
     }
 
     private File createImageFile() throws IOException {
@@ -192,12 +239,33 @@ public class MainActivity extends AppCompatActivity {
         if (!myDir.exists())
             myDir.mkdirs();
         File image = File.createTempFile(
-                imageFileName,  *//* prefix *//*
-                ".jpg",         *//* suffix *//*
-                myDir      *//* directory *//*
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                myDir      /* directory */
         );
         mCurrentPhotoPath = image.getAbsolutePath();
+        Log.v("mainfile195",mCurrentPhotoPath);
+
+        AsyncTask.execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    extractedText=VisionAPI.extractTextFromImage(mCurrentPhotoPath);
+                    Log.v("mainfile200",extractedText.toString());
+                    for(String s: extractedText){
+                        testExtract[0] = s;
+
+                        break;
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+
+        textView.setText(testExtract[0]);
         return image;
-    }*/
+    }
 
 }

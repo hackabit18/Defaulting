@@ -14,4 +14,8 @@ public interface UserDao {
     List<Prescription> getAllPrescriptions();
     @Insert
     void insertAll(Prescription prescriptionObject);
+    @Insert
+    void inserNewDose(NewDose newDose);
+    @Query("SELECT * FROM new_dose")
+    ArrayList<NewDose> getNewDose();
 }
