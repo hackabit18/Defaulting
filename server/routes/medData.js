@@ -26,7 +26,10 @@ router.post('/', function(req, res, next) {
 		const ocrArr = JSON.parse(correctJson)
 		medData.forEach(o => {
 			ocrArr.forEach(scannedOcr => {
-			if(o["drug-name"].toLowerCase().startsWith(scannedOcr.toLowerCase()))
+			if(
+				o["drug-name"].toLowerCase().startsWith(scannedOcr.toLowerCase())  || 
+				scannedOcr.toLowerCase().startsWith(o["drug-name"].toLowerCase())
+			)
 				return res.json(o);
 			})
 		})
