@@ -18,9 +18,12 @@ router.get('/', function(req, res, next) {
 
 /* POST med data. */
 router.post('/', function(req, res, next) {
+	console.log("Request Recieved: ", req.body)
 	db.MedData.find()
 	.then(function(medData) {
-		const ocrArr = JSON.parse(req.body.ocr)
+		const badJson = req.body.ocr
+		var correctJson = badJson.replace(/(['"])?([a-z0-9A-Z_]+)(['"])?:/g, '"$2": ');
+		const ocrArr = JSON.parse(correctJson)
 		medData.forEach(o => {
 			ocrArr.forEach(scannedOcr => {
 			if(o["drug-name"].toLowerCase().startsWith(scannedOcr.toLowerCase()))
