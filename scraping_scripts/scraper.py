@@ -50,7 +50,7 @@ print("a_to_z %s" % a_to_z)
 
 for character in a_to_z:
 	print("currently scraping: %s" %character)
-	request_url_for_first_page = 'https://www.medindia.net/drug-price/brand-index.asp?alpha=' + character
+	request_url_for_first_page = ''' add url here''' + character
 	written_to_current_file_atleast_once = False # character.txt  (character is a variable)
 	try: 
 		response_object_for_first_page = requests.get(request_url_for_first_page, timeout = 60)
@@ -63,7 +63,6 @@ for character in a_to_z:
 		# iterate on each page of a character 
 		while page_number <= last_page_number:
 			print("page no: %s" %page_number)
-			#url = 'https://www.medindia.net/drug-price/brand-index.asp?alpha=a&page=' + str(page_number)
 			request_url_for_current_page = request_url_for_first_page + '&page=' + str(page_number)
 			page_number = page_number + 1
 
@@ -78,23 +77,13 @@ for character in a_to_z:
 				
 				filename = str(character) + '.txt'
 				just_opened_array_at_start = False
-				# if written_to_current_file_atleast_once == False:
-				# 	written_to_current_file_atleast_once = True
-				# 	just_opened_array_at_start = True
-				# open(filename, 'a+').write(json.dumps(unique_medicines`_info))
+				
 				with open(filename, 'a+') as file:
 					for k, b in unique_medicines_info.items():
 						file.write(k + ";" + b + "\n")
-						# if (page_number != last_page_number and k != unique_medicines_info.keys()[-1]):
-						# 	file.write("\n")
 								
 			except:
 				print("Error is there")
-				# pass
-		# with open(str(character) + ".txt", 'a+') as file:
-		# 	# file.seek(-1, os.SEEK_CURR)
-		# 	file.write(']')
-		# print("done: %s" %character)
 	except:
 		print("Error is there")
-		# pass
+	
