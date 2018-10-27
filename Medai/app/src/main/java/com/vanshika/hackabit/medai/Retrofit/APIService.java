@@ -10,11 +10,11 @@ import retrofit2.http.POST;
 
 public interface APIService {
 
-    @POST("/medData/")
-    Call<MedicineDb> getMedicineInfo();
+   /* @POST("/medData/")
+    Call<MedicineDb> getMedicineInfo();*/
     @FormUrlEncoded
     @POST("/medData")
-    Call <Void> sendMedName(@Field("name") String medName);
+    Call <MedicineDb> sendMedName(@Field("ocr") String medName);
 
 //
 //    Call <Void> sendMedName(@Field("name") String medName);
