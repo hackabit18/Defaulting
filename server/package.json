@@ -7,11 +7,10 @@
     "dev": "nodemon ./bin/www"
   },
   "dependencies": {
-    "cookie-parser": "~1.4.3",
-    "debug": "~2.6.9",
     "express": "~4.16.0",
-    "mongoose": "^5.3.7",
-    "morgan": "~1.9.0",
+    "mongoose": "^5.3.7"
+  },
+  "devDependencies": {
     "nodemon": "^1.18.5"
   }
 }
