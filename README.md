@@ -12,7 +12,7 @@ We believe that the basic utility provided by the application of identifying and
     1. Google Cloud Vision API
     2. Custom self made Java client for Google Vision API 
 
-We use Google Cloud Vision API to perform OCR on the image captured from our android app. Experiments were made on Tesseract, another Image ML libray, and Vision API with Vision API performing significantly better and faster.
+We use Google Cloud Vision API to perform OCR on the image captured from our android app. Experiments were made on Tesseract, another Image ML libray, and Vision API with Vision API performing significantly better and faster. A custom Java wrapper was written to access the Vision API using POST requests.
 
 #### Server:
     1. Node.js / Express.js for server
@@ -20,3 +20,15 @@ We use Google Cloud Vision API to perform OCR on the image captured from our and
 
 #### Scraper:
     1. Python's scraping library BeautifulSoup for scraping medicine data.
+
+## How To Run:
+The apk for the android application can be found at: 
+> _Project Home_/apk/medai.apk
+
+## Application Description and Future Scope:
+The application homepage is the current prescription of the user containing dosage information and drug information served from our database. The homepage also has the History pane containg information about past mediciine usage. Camera button on the top left side opens the camera and lets the user capture and crop the image containing the medicine name. The user is then prompted to add a Dosage containing the drug information to their prescripton. If the drug is not found then the user is prompted to add the drug information to our database.
+
+The primary future scope of our application is to be a ubiqutuous health management tool for the end user using the usage history to find the cheapest medicines for any given prescription and to read the doctor's handwritten prescription to generate reminders automatically. We also aim to allow users to renew recurring or buy prescriptions from our affliate links to allow for commericiliazation for the object.
+
+## Lincense Information:
+Google Vision API is a SaaS provided by Google. 
