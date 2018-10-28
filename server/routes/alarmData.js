@@ -3,7 +3,7 @@ var router = express.Router();
 var db = require('../models');
 
 
-/* GET med data. */
+/* GET alarm  data. */
 router.get('/', function(req, res, next) {
   db.Alarm.find()
     .then(function(alarm) {
@@ -15,7 +15,7 @@ router.get('/', function(req, res, next) {
   })
 });
 
-/* POST med data. */
+/* POST alarm data. */
 router.post('/createAlarm', function(req, res, next) {
   db.Alarm.create(req.body)
       .then(function(newAlarm) {

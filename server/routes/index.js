@@ -3,7 +3,7 @@ var router = express.Router();
 var db = require('../models');
 
 
-/* GET home page. */
+/* GET root data {returns all medicines}. */
 router.get('/', function(req, res, next) {
   console.log("got index")
   db.MedData.find()
