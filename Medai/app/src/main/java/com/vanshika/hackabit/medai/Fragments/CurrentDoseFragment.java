@@ -57,13 +57,7 @@ public class CurrentDoseFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         addAdapter();
 
-        mLayoutManager =
-                new LinearLayoutManager(getActivity().getApplication(), LinearLayoutManager.VERTICAL, false);
 
-        recyclerView=getActivity().findViewById(R.id.currentDoseRecycler);
-        recyclerView.setLayoutManager(mLayoutManager);
-        adapter=new CurrentPresAdapter(getActivity().getApplicationContext(),list);
-        recyclerView.setAdapter(adapter);
 
     }
 
@@ -71,14 +65,9 @@ public class CurrentDoseFragment extends Fragment {
         list=new ArrayList<>();
         db = Room.databaseBuilder(getActivity().getApplicationContext(), AppDatabase.class, "new_dose")
                 .build();
-        AsyncTask.execute(new Runnable() {
-            @Override
-            public void run() {
-                list=db.userDao().getNewDose();
-            }
-        });
+        new task().execute("");
 
-        list.add(new NewDose("bvkse","ckjbakc","ckjabjc","cakjbc","cka","ckav","cka"));
+        //list.add(new NewDose("bvkse","ckjbakc","ckjabjc","cakjbc","cka","ckav","cka"));
         /*list.add(new CurrentMedicine("med1","Dose timings: X times a Day\n" +
                 "Dose Strength: Y mg\n" +
                 "Active ingredient : <Chemical_Name>\n" +
@@ -91,6 +80,28 @@ public class CurrentDoseFragment extends Fragment {
                 "Dose Strength: Y mg\n" +
                 "Active ingredient : <Chemical_Name>\n" +
                 "Description: <Info Dump>","t1"));*/
+    }
+    public class task extends AsyncTask<String, String,String>{
+
+        @Override
+        protected String doInBackground(String... strings) {
+
+            list=db.userDao().getNewDose();
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            mLayoutManager =
+                    new LinearLayoutManager(getActivity().getApplication(), LinearLayoutManager.VERTICAL, false);
+
+            recyclerView=getActivity().findViewById(R.id.currentDoseRecycler);
+            recyclerView.setLayoutManager(mLayoutManager);
+            adapter=new CurrentPresAdapter(getActivity().getApplicationContext(),list);
+            recyclerView.setAdapter(adapter);
+        }
     }
 
 }
