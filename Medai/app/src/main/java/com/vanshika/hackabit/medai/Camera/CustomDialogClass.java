@@ -19,6 +19,7 @@ public class CustomDialogClass extends Dialog implements
     private static String dose,info;
     //String dose,info;
     TextView medicineName, medicineInfo;
+    public static String dosage,not1,side1,ti1,ti2,ti3;
     public Activity c;
     public Dialog d;
     public Button yes, no;
@@ -31,6 +32,15 @@ public class CustomDialogClass extends Dialog implements
     public static void addData(String dose1,String info1){
         dose=dose1;
         info=info1;
+    }
+    public static void addData(String dose1,String side,String dosage,String not,String t1,String t2,String t3){
+        dose=dose1;
+        side1=side;
+        not1=not;
+        dosage=dosage;
+        ti1=t1;
+        ti2=t2;
+        ti3=ti3;
     }
 
     @Override
@@ -58,6 +68,12 @@ public class CustomDialogClass extends Dialog implements
                 Intent intent=new Intent(c, AddPrescription.class);
                 intent.putExtra("name",dose);
                 intent.putExtra("info",info);
+                intent.putExtra("dosage",dosage);
+                intent.putExtra("side1",side1);
+                intent.putExtra("not1",not1);
+                intent.putExtra("t1",ti1);
+                intent.putExtra("t2",ti2);
+                intent.putExtra("t3",ti2);
                 c.startActivity(intent);
                 break;
 

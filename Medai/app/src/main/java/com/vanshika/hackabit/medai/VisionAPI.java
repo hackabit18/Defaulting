@@ -29,7 +29,7 @@ public class VisionAPI {
     private static final String TARGET_URL =
             "https://vision.googleapis.com/v1/images:annotate?";
     private static final String API_KEY =
-            "key=AIzaSyBpa9Syok9eucCZAlF5amM-dIyEN9JlwXY";
+            "key=$API_KEY";
 
     private static HttpURLConnection makeConnection() throws IOException {
         URL serverUrl = new URL(TARGET_URL + API_KEY);

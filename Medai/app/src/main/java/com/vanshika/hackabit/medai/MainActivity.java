@@ -204,11 +204,12 @@ Uri photoURI;
                 //Log.v("line 195",response.body().toString());
                 Toast.makeText(MainActivity.this, "successful", Toast.LENGTH_SHORT).show();
                 if (response.body()!=null){
-                    CustomDialogClass.addData(response.body().getMedicineName(),response.body().getDosage()+" "+response.body().getSideEffects()+" "+response.body().getNtb());
+                    CustomDialogClass.addData(response.body().getMedicineName(),response.body().getDosage()+"/n"+response.body().getSideEffects()+"/n"+response.body().getNtb());
                 }
                 else CustomDialogClass.addData("Not Available ","No info available ");
                 CustomDialogClass cdd=new CustomDialogClass(MainActivity.this);
                 cdd.show();
+
             }
 
             @Override

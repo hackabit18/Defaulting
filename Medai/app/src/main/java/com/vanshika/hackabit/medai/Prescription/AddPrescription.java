@@ -2,6 +2,8 @@ package com.vanshika.hackabit.medai.Prescription;
 
 import android.app.TimePickerDialog;
 import android.arch.persistence.room.Room;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputEditText;
@@ -18,6 +20,7 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.vanshika.hackabit.medai.MainActivity;
 import com.vanshika.hackabit.medai.R;
 import com.vanshika.hackabit.medai.Room.AppDatabase;
 import com.vanshika.hackabit.medai.Room.NewDose;
@@ -45,6 +48,9 @@ Button button;
         time1=findViewById(R.id.time1);
         time2=findViewById(R.id.time2);
         time3=findViewById(R.id.time3);
+        String name=getIntent().getStringExtra("name");
+        String info=getIntent().getStringExtra("info");
+        String dosage=getIntent().getStringExtra("dosage");
         //t1=findViewById(R.id.t1);
         /*t2=findViewById(R.id.t2);
         t3=findViewById(R.id.t3);*/
@@ -106,21 +112,35 @@ Button button;
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final AppDatabase
+                /*final AppDatabase
                         db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class,"prescription")
                         .build();
                 AsyncTask.execute(new Runnable() {
                     @Override
                     public void run() {
-                        db.userDao().inserNewDose(new NewDose(name.getText().toString(),getIntent().getStringExtra("info"),""," ",set1,set2,set3));
-                        Log.v("line116",db.toString()+" "+db.userDao().getNewDose().get(0).getDosage());
+                        db.userDao().inserNewDose(new NewDose(name.getText().toString(),getIntent().getStringExtra("info"),"vnekv","vvav",set1,set2,set3));
+                        Log.v("line116",db.toString()+" dosage:"+db.userDao().getNewDose().get(4).getDosage()+"nottaken:"+db.userDao().getNewDose().get(4).getNotTaken());
 
                     }
-                });
+                });*/
+                if (getSharedPreferences("newdose",MODE_PRIVATE).getInt("number",0)==0){
+                    SharedPreferences.Editor editor=getSharedPreferences("newdose",MODE_PRIVATE).edit();
+                    editor.putString("card1",getIntent().getStringExtra("name")+"|"+"kwebfc"+"|"+"bvkw"+"|"+"bckw"+"|"+set1+"|"+set2+"|"+set3);
+                    editor.putInt("number",1);
+                    editor.apply();
+                }
+                if (getSharedPreferences("newdose",MODE_PRIVATE).getInt("number",0)==1){
+                    SharedPreferences.Editor editor=getSharedPreferences("newdose",MODE_PRIVATE).edit();
+                    editor.putString("card2",getIntent().getStringExtra("name")+"|"+set1+"|"+set2+"|"+set3);
+                    editor.putInt("number",2);
+                    editor.apply();
+                }
+
                 Toast.makeText(AddPrescription.this, "Dose added", Toast.LENGTH_SHORT).show();
                 finish();
 
-
+                Intent intent=new Intent(AddPrescription.this, MainActivity.class);
+                startActivity(intent);
             }
         });
     }
