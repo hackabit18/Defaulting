@@ -35,7 +35,6 @@ import com.google.android.gms.vision.text.TextRecognizer;*/
 import com.soundcloud.android.crop.Crop;
 import com.soundcloud.android.crop.CropImageActivity;
 import com.vanshika.hackabit.medai.Adapters.ViewPagerAdapter;
-import com.vanshika.hackabit.medai.Camera.CustomDialogActivity;
 import com.vanshika.hackabit.medai.Camera.CustomDialogClass;
 import com.vanshika.hackabit.medai.Fragments.CurrentDoseFragment;
 import com.vanshika.hackabit.medai.Fragments.HistoryFragment;
@@ -88,7 +87,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 viewPager.setCurrentItem(position, false);
-
+                ActiveFragment fragment = (ActiveFragment) viewPagerAdapter.instantiateItem(viewPager, position);
+                if (fragment != null) {
+                    fragment.fragmentBecameVisible();
+                }
             }
 
             @Override
@@ -123,12 +125,12 @@ public class MainActivity extends AppCompatActivity {
     }
     private void setupViewPager(ViewPager viewPager)
     {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+         viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         currentDoseFragment=new CurrentDoseFragment();
         historyFragment=new HistoryFragment();
-        adapter.addFragment(currentDoseFragment,"Current Dose");
-        adapter.addFragment(historyFragment,"HISTORY");
-        viewPager.setAdapter(adapter);
+        viewPagerAdapter.addFragment(currentDoseFragment,"Current Dose");
+        viewPagerAdapter.addFragment(historyFragment,"HISTORY");
+        viewPager.setAdapter(viewPagerAdapter);
    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -204,7 +206,7 @@ Uri photoURI;
                 //Log.v("line 195",response.body().toString());
                 Toast.makeText(MainActivity.this, "successful", Toast.LENGTH_SHORT).show();
                 if (response.body()!=null){
-                    CustomDialogClass.addData(response.body().getMedicineName(),response.body().getDosage()+"/n"+response.body().getSideEffects()+"/n"+response.body().getNtb());
+                    CustomDialogClass.addData(response.body().getMedicineName(),response.body().getDosage(),response.body().getSideEffects(),response.body().getNtb());
                 }
                 else CustomDialogClass.addData("Not Available ","No info available ");
                 CustomDialogClass cdd=new CustomDialogClass(MainActivity.this);

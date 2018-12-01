@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.vanshika.hackabit.medai.Prescription.AddPrescription;
-import com.vanshika.hackabit.medai.Prescription.PrescriptionList;
 import com.vanshika.hackabit.medai.R;
 
 public class CustomDialogClass extends Dialog implements
@@ -33,14 +32,14 @@ public class CustomDialogClass extends Dialog implements
         dose=dose1;
         info=info1;
     }
-    public static void addData(String dose1,String side,String dosage,String not,String t1,String t2,String t3){
-        dose=dose1;
+    public static void addData(String name,String dose1,String side,String not){
+        dose=name;
         side1=side;
         not1=not;
-        dosage=dosage;
-        ti1=t1;
+        dosage=dose1;
+        /*ti1=t1;
         ti2=t2;
-        ti3=ti3;
+        ti3=ti3;*/
     }
 
     @Override
@@ -67,13 +66,13 @@ public class CustomDialogClass extends Dialog implements
             case R.id.btn_yes:
                 Intent intent=new Intent(c, AddPrescription.class);
                 intent.putExtra("name",dose);
-                intent.putExtra("info",info);
+                //intent.putExtra("info",info);
                 intent.putExtra("dosage",dosage);
                 intent.putExtra("side1",side1);
                 intent.putExtra("not1",not1);
-                intent.putExtra("t1",ti1);
+                /*intent.putExtra("t1",ti1);
                 intent.putExtra("t2",ti2);
-                intent.putExtra("t3",ti2);
+                intent.putExtra("t3",ti2);*/
                 c.startActivity(intent);
                 break;
 

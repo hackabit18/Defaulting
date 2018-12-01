@@ -20,9 +20,8 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.vanshika.hackabit.medai.ActiveFragment;
 import com.vanshika.hackabit.medai.Adapters.CurrentPresAdapter;
-import com.vanshika.hackabit.medai.MainActivity;
-import com.vanshika.hackabit.medai.Models.CurrentMedicine;
 import com.vanshika.hackabit.medai.Models.MedicineDb;
 import com.vanshika.hackabit.medai.R;
 import com.vanshika.hackabit.medai.Room.AppDatabase;
@@ -32,12 +31,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class CurrentDoseFragment extends Fragment {
+public class CurrentDoseFragment extends Fragment implements ActiveFragment{
     CurrentPresAdapter adapter;
     List<NewDose> list;
     RecyclerView recyclerView;
     LinearLayoutManager mLayoutManager;
     AppDatabase db;
+
     public CurrentDoseFragment() {
     }
 
@@ -50,6 +50,8 @@ public class CurrentDoseFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+
         return inflater.inflate(R.layout.fragment_current_dose, container, false);
     }
 
@@ -61,44 +63,14 @@ public class CurrentDoseFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        list=new ArrayList<>();
+        list = new ArrayList<>();
         //addAdapter();
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            db = Room.inMemoryDatabaseBuilder(getActivity().getApplicationContext(), AppDatabase.class)
-                    .build();
-            //new task().execute("");
+            db = AppDatabase.getAppDatabase(getActivity().getApplicationContext());
+            new task().execute("");
         }
-        /*SharedPreferences prefs = getActivity().getSharedPreferences("newdose", Context.MODE_PRIVATE);
-        int i=prefs.getInt("number",0);
-        if(i!=0){
-            String c="|";
-            String card1=prefs.getString("card1",null);
-            String name=card1.split(c)[0];
-            String side=card1.split(c)[1];
-            String dosage=card1.split(c)[2];
-            String notTaken=card1.split(c)[3];
-            String t1=card1.split(c)[4];
-            String t2=card1.split(c)[5];
-            String t3=card1.split(c)[6];
-            list.add(new NewDose(name,side,dosage,notTaken,t1,t2,t3));
-            Log.v("line84",name+" "+side);
-        }*/
 
-        /*if(i==2){
-            String c="|";
-            String card1=prefs.getString("card1",null);
-            String name=card1.split(c)[0];
-            String side=card1.split(c)[1];
-            String dosage=card1.split(c)[2];
-            String notTaken=card1.split(c)[3];
-            String t1=card1.split(c)[4];
-            String t2=card1.split(c)[5];
-            String t3=card1.split(c)[6];
-            list.add(new NewDose(name,side,dosage,notTaken,t1,t2,t3));
-        }*/
-
-        //new task().execute("");
-        list.add(new NewDose("Pyrigesic","Nausea, stomach pain, loss of appetite, upper stomach pain, dark urine",
+       /* list.add(new NewDose("Pyrigesic","Nausea, stomach pain, loss of appetite, upper stomach pain, dark urine",
                 "The oral dose for adults is 325 to 650 mg every 4 to 6 hours." ,
                 "Hypersensitivity" ,
                 "","13:00","20:00"));
@@ -109,34 +81,32 @@ public class CurrentDoseFragment extends Fragment {
         list.add(new NewDose("Sinarest","Nausea, stomach pain, loss of appetite, upper stomach pain, dark urine, clay colored stool.",
                 "The maximum daily dose is 4 grams." ,
                 "Hypersensitivity" ,
-                "6:00","13:00","20:00"));
+                "6:00","13:00","20:00"));*/
 
-        mLayoutManager =
+        /*mLayoutManager =
                 new LinearLayoutManager(getActivity().getApplication(), LinearLayoutManager.VERTICAL, false);
 
         recyclerView=getActivity().findViewById(R.id.currentDoseRecycler);
 
         adapter=new CurrentPresAdapter(getActivity().getApplicationContext(),list);
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(mLayoutManager);
+        recyclerView.setLayoutManager(mLayoutManager);*/
 
 
     }
 
-    private void addAdapter() {
-
-
-
-        //list.add(new NewDose("bvkse","ckjbakc","ckjabjc","cakjbc","cka","ckav","cka"));
-
+    @Override
+    public void fragmentBecameVisible() {
+        new task().execute("");
     }
-    public class task extends AsyncTask<String, String,String>{
+
+    public class task extends AsyncTask<String, String, String> {
 
         @Override
         protected String doInBackground(String... strings) {
-            list=db.userDao().getNewDose();
+            list = AppDatabase.getAppDatabase(getActivity().getApplicationContext()).userDao().getNewDose();
 
-            list.add(new NewDose("med1","side effects",
+            /*list.add(new NewDose("med1","side effects",
                     "dosage" ,
                     "note taken" ,
                     "t1","t2","t3"));
@@ -147,7 +117,7 @@ public class CurrentDoseFragment extends Fragment {
             list.add(new NewDose("med1","side effects",
                     "dosage" ,
                     "note taken" ,
-                    "t1","t2","t3"));
+                    "t1","t2","t3"));*/
 
             return null;
         }
@@ -157,13 +127,10 @@ public class CurrentDoseFragment extends Fragment {
             super.onPostExecute(s);
             mLayoutManager =
                     new LinearLayoutManager(getActivity().getApplication(), LinearLayoutManager.VERTICAL, false);
-
-            recyclerView=getActivity().findViewById(R.id.currentDoseRecycler);
-
-            adapter=new CurrentPresAdapter(getActivity().getApplicationContext(),list);
+            recyclerView = getActivity().findViewById(R.id.currentDoseRecycler);
+            adapter = new CurrentPresAdapter(getActivity().getApplicationContext(), list, "current");
             recyclerView.setAdapter(adapter);
             recyclerView.setLayoutManager(mLayoutManager);
         }
     }
-
 }

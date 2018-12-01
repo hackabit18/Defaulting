@@ -22,14 +22,14 @@ import android.graphics.BitmapFactory;
 import android.util.Base64;
 import android.util.Log;
 
-import org.apache.commons.io.FileUtils;;;
+import org.apache.commons.io.FileUtils;
 
 public class VisionAPI {
 
     private static final String TARGET_URL =
             "https://vision.googleapis.com/v1/images:annotate?";
     private static final String API_KEY =
-            "key=$API_KEY";
+            "key=AIzaSyBpa9Syok9eucCZAlF5amM-dIyEN9JlwXY";
 
     private static HttpURLConnection makeConnection() throws IOException {
         URL serverUrl = new URL(TARGET_URL + API_KEY);

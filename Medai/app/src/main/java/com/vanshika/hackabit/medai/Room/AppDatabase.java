@@ -10,9 +10,8 @@ import android.arch.persistence.room.TypeConverters;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
-import com.vanshika.hackabit.medai.Prescription.PrescriptionList;
 
-@Database(entities = {NewDose.class},version=2)
+@Database(entities = {NewDose.class,HistoryDose.class},version=2)
 //@TypeConverters(DateConverter.class)
 public abstract class AppDatabase  extends RoomDatabase{
     private static AppDatabase INSTANCE;

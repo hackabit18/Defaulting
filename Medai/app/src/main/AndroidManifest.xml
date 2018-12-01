@@ -4,6 +4,7 @@
     package="com.vanshika.hackabit.medai">
 
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -17,7 +18,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name="com.soundcloud.android.crop.CropImageActivity" />
-        <activity android:name=".SplashActivity"
+        <activity
+            android:name=".SplashActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,13 +29,17 @@
         </activity>
 
         <service
-            android:name=".AlarmClock.AlarmService"
+            android:name=".AlarmClock.BackgroundService"
+            android:permission="android.permission.BIND_JOB_SERVICE"
             android:enabled="true"
             android:label="AlarmService" />
 
-        <receiver
-            android:name=".AlarmManager.AlarmReceiver"
-            android:enabled="true" />
+        <receiver android:name=".AlarmClock.Alarm">
+            <!--<intent-filter>
+                <action android:name="ke.co.appslab.androidbackgroundservices.Alarm.ResponseBroadcastReceiver"/>
+            </intent-filter>-->
+        </receiver>
+        <receiver android:name=".AlarmClock.ToastBroadcastReciever"></receiver>
 
         <provider
             android:name="android.support.v4.content.FileProvider"
@@ -48,11 +54,11 @@
         <meta-data
             android:name="com.google.firebase.ml.vision.DEPENDENCIES"
             android:value="ocr" />
-        <activity android:name=".MainActivity"/>
-        <activity android:name=".PostDbResponse.PostDb" />
+
+        <activity android:name=".MainActivity" />
+        <!--<activity android:name=".PostDbResponse.PostDb" />
         <activity android:name=".Camera.CustomDialogActivity" />
-        <activity android:name=".Prescription.PrescriptionList" />
-        <activity android:name=".Prescription.PrescriptionActivity" />
+        <activity android:name=".Prescription.PrescriptionActivity" />-->
         <activity android:name=".Prescription.AddPrescription" />
         <activity android:name=".AlarmClock.AlarmActivity" />
 
