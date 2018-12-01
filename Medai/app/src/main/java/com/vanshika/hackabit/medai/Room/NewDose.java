@@ -5,7 +5,7 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
-@Entity(tableName = "new_dose")
+@Entity(tableName = "newdose")
 public class NewDose {
     @NonNull
     @PrimaryKey
@@ -24,7 +24,9 @@ public class NewDose {
     @ColumnInfo(name = "t3")
     String t3;
 
-    public NewDose(@NonNull String name, String side_effects, String dosage, String notTaken, String t1, String t2, String t3) {
+    int fragment = 0;
+
+    public NewDose( String name, String side_effects, String dosage, String notTaken, String t1, String t2, String t3) {
         this.name = name;
         this.side_effects = side_effects;
         this.dosage = dosage;
@@ -34,6 +36,29 @@ public class NewDose {
         this.t3 = t3;
     }
 
+    public String getT1() {
+        return t1;
+    }
+
+    public void setT1(String t1) {
+        this.t1 = t1;
+    }
+
+    public String getT2() {
+        return t2;
+    }
+
+    public void setT2(String t2) {
+        this.t2 = t2;
+    }
+
+    public String getT3() {
+        return t3;
+    }
+
+    public void setT3(String t3) {
+        this.t3 = t3;
+    }
     /*public NewDose(@NonNull String name, String side_effects, String dosage, String notTaken) {
         this.name = name;
         this.side_effects = side_effects;

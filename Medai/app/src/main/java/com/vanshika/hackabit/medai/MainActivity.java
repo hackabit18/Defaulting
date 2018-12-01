@@ -35,7 +35,6 @@ import com.google.android.gms.vision.text.TextRecognizer;*/
 import com.soundcloud.android.crop.Crop;
 import com.soundcloud.android.crop.CropImageActivity;
 import com.vanshika.hackabit.medai.Adapters.ViewPagerAdapter;
-import com.vanshika.hackabit.medai.Camera.CustomDialogActivity;
 import com.vanshika.hackabit.medai.Camera.CustomDialogClass;
 import com.vanshika.hackabit.medai.Fragments.CurrentDoseFragment;
 import com.vanshika.hackabit.medai.Fragments.HistoryFragment;
@@ -76,7 +75,7 @@ public class MainActivity extends AppCompatActivity {
         viewPager.setOffscreenPageLimit(3);
         mAPIService = ApiUtils.getAPIService();
         //Initializing the tablayout
-        textView=findViewById(R.id.imageText);
+        //textView=findViewById(R.id.imageText);
         tabLayout = (TabLayout) findViewById(R.id.tablayout);
         tabLayout.setupWithViewPager(viewPager);
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -88,7 +87,10 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onPageSelected(int position) {
                 viewPager.setCurrentItem(position, false);
-
+                ActiveFragment fragment = (ActiveFragment) viewPagerAdapter.instantiateItem(viewPager, position);
+                if (fragment != null) {
+                    fragment.fragmentBecameVisible();
+                }
             }
 
             @Override
@@ -123,12 +125,12 @@ public class MainActivity extends AppCompatActivity {
     }
     private void setupViewPager(ViewPager viewPager)
     {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+         viewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
         currentDoseFragment=new CurrentDoseFragment();
         historyFragment=new HistoryFragment();
-        adapter.addFragment(currentDoseFragment,"Current Dose");
-        adapter.addFragment(historyFragment,"HISTORY");
-        viewPager.setAdapter(adapter);
+        viewPagerAdapter.addFragment(currentDoseFragment,"Current Dose");
+        viewPagerAdapter.addFragment(historyFragment,"HISTORY");
+        viewPager.setAdapter(viewPagerAdapter);
    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -198,14 +200,18 @@ Uri photoURI;
     }
 
     private void workOnDatabase(String s) {
-        mAPIService.sendMedName("[\"ac\"]").enqueue(new Callback<MedicineDb>() {
+        mAPIService.sendMedName(s).enqueue(new Callback<MedicineDb>() {
             @Override
             public void onResponse(Call<MedicineDb> call, Response<MedicineDb> response) {
                 //Log.v("line 195",response.body().toString());
                 Toast.makeText(MainActivity.this, "successful", Toast.LENGTH_SHORT).show();
-                CustomDialogClass.addData(response.body().getMedicineName(),response.body().getDosage()+" "+response.body().getSideEffects()+" "+response.body().getNtb());
+                if (response.body()!=null){
+                    CustomDialogClass.addData(response.body().getMedicineName(),response.body().getDosage(),response.body().getSideEffects(),response.body().getNtb());
+                }
+                else CustomDialogClass.addData("Not Available ","No info available ");
                 CustomDialogClass cdd=new CustomDialogClass(MainActivity.this);
                 cdd.show();
+
             }
 
             @Override
@@ -219,6 +225,7 @@ Uri photoURI;
                 if (response.isSuccessful()){
                     Log.v("line207",response.body().getDosage());
                     *//*final AppDatabase
+                            db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class,"new_dose")
                             db = Room.databaseBuilder(getApplicationContext(), AppDatabase.class,"new_dose")
                             .build();
                     AsyncTask.execute(new Runnable() {
@@ -254,13 +261,16 @@ Uri photoURI;
 
                         extractedText = VisionAPI.extractTextFromImage(mCurrentPhotoPath);
                         String testExtract = "";
-                        /*for(String s: extractedText){
-                            testExtract = s;
+                        for(String s: extractedText){
+                            testExtract  = testExtract+ "\""+s+"\",";
                             Log.v("mainfile295", testExtract);
 
-                        }*/
-                        Log.v("mainfile262", extractedText.toString());
-                        workOnDatabase(extractedText.toString());
+                        }
+                        testExtract = testExtract.substring(0, testExtract.length()-1);
+                        testExtract="["+testExtract+"]";
+                        Log.v("mainline265",testExtract);
+                        //Log.v("mainfile262", extractedText);
+                        workOnDatabase(testExtract);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
